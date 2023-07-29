@@ -1,31 +1,35 @@
 <script>
-  import { onMount } from 'svelte';
+  import {hexagramNames} from "./hexagramInfo.js";
+  import {randomKaomoji} from "./randomKaomoji.js"
 
-  /** @type {string} */
-  export let name;
-
-  let counter = 0; // @hmr:keep
-
-  onMount(() => {
-    const interval = setInterval(() => {
-      counter++;
-    }, 1000);
-
-    return () => {
-      clearInterval(interval);
-    };
-  });
+  function getRandomNumber() {
+  return Math.floor(Math.random() * (67 - 4 + 1)) + 4; // min 4 max 67
+}
+  let randum = 0;
+  let hemoji = "";
+  let hexName = "";
+  function randomizeHexagram() {
+    if (question.length == 0) {
+      hexName = "Please, raise a question."
+    } else {
+      randum = getRandomNumber();
+    hemoji = String.fromCharCode(randum + 19900);
+    hexName = hexagramNames[randum - 4];
+    }
+  }
+  /**
+   * @type {string}
+   */
+  let question = "";
 </script>
 
 <main>
   <h1>占卦</h1>
-  <p>
-    Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn
-    how to build Svelte apps.
-  </p>
-  <p>
-    This page has been open for {counter}s.
-  </p>
+  <p>input your question here   <span>{randomKaomoji()}</span>  </p>
+  <input bind:value={question}/>
+  <button on:click={randomizeHexagram}>submit</button>
+  <h1>{hemoji}</h1>
+  <h2>{hexName}</h2>
 </main>
 
 <style>
