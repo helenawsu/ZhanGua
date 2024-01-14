@@ -18,7 +18,7 @@
     hemoji = String.fromCharCode(randum + 19900);
     hexName = hexagramNames[randum - 4];
       try {
-        
+        console.log("starting api call");
         const apiUrl = 'https://api.openai.com/v1/chat/completions';
         const startMessage = 'You will act like a expert Yijing prophet. You will give prediction or advice of an event based on Yijing knowledge. Use the hexagram' +hexName+ 'and explain how it is related to the event. If the event can not be advised by Yijing or you cannot understand the input, tell them to take this seriously.';
         const requestBody = {
@@ -38,7 +38,7 @@
           },
           body: JSON.stringify(requestBody),
         });        
-  
+        console.log("ending api call");
         const data = await response.json();
         // Handle the response as needed
         console.log(data);
